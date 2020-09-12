@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
+
 const App: React.FunctionComponent = () => {
-  const a = 1;
-  console.log(a);
   return (
     <div className="App">
       <header className="App-header">
