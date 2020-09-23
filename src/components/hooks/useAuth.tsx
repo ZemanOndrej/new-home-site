@@ -1,6 +1,6 @@
 import { User } from 'firebase';
 import { useState, useContext, useEffect } from 'react';
-import { FirebaseContext } from './context/firebase';
+import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/auth';
 
 const initUserState = { user: null };

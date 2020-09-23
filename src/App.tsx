@@ -10,7 +10,7 @@ import Landing from 'components/routes/Landing';
 const App: React.FunctionComponent = () => {
   return (
     <Router>
-      <Navigation />
+      {/* <Navigation /> */}
       <Route path={LANDING} component={Landing} exact />
       <Route path={HOME} component={Home} />
       <Route path={SIGN_IN} component={SignIn} />

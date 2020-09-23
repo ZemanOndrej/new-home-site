@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from 'components/useAuth';
+import { useAuth } from 'components/hooks/useAuth';
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(3),

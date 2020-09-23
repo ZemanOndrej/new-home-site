@@ -2,13 +2,16 @@ import React from 'react';
 import * as ROUTES from 'constants/routes';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-ui/core';
-import { useAuth } from './useAuth';
+import { useAuth } from 'components/hooks/useAuth';
 
 export default function Navigation() {
-  const { logout, user, isLoggedIn } = useAuth();
+  const { logout, isLoggedIn } = useAuth();
   return (
     <div>
       <ul>
+        <li>
+          <Link to={ROUTES.LANDING}>Landing</Link>
+        </li>
         <li>
           <Link to={ROUTES.HOME}>Home</Link>
         </li>
