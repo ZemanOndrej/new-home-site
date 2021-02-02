@@ -1,0 +1,9 @@
+.clickable {
+  cursor: pointer;
+}
+.loader-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}

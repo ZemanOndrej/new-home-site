@@ -30,17 +30,34 @@ body {
 /* b. Header Styles
 /* ------------------------------------------------------------------ */
 
+.header-wrapper .bg {
+  background-size: cover !important;
+  -webkit-background-size: cover !important;
+  background: #161415 url(http://static.ozeman.eu/images/header-background.jpg)
+    no-repeat top center;
+
+  animation: sharpen 0.5s ease-out;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 header {
   position: relative;
   height: 800px;
   min-height: 500px;
   width: 100%;
-  background: #161415 url(http://static.ozeman.eu/images/header-background.jpg)
-    no-repeat top center;
-  background-size: cover !important;
-  -webkit-background-size: cover !important;
   text-align: center;
   overflow: hidden;
+}
+
+@keyframes sharpen {
+  from {
+    filter: blur(8px);
+  }
+  to {
+    filter: blur(0px);
+  }
 }
 
 /* vertically center banner section */
@@ -180,7 +197,8 @@ ul#nav li {
 }
 
 /* Links */
-ul#nav li a {
+ul#nav li a,
+span {
   /* 8px padding top + 8px padding bottom + 32px line-height = 48px */
 
   display: inline-block;

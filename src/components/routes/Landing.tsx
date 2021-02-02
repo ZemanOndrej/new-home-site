@@ -9,7 +9,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/database';
 import { MainPageContent } from 'types/mainPage';
-import { Waypoint } from 'react-waypoint';
+import 'styles/landing.css';
+import { FadeLoader } from 'react-spinners';
+export enum LANDING_WP {
+  HOME = 'home',
+  ABOUT = 'about',
+  RESUME = 'resume',
+  PORTFOLIO = 'portfolio',
+  TESTIMONIALS = 'testimonials',
+  CONTACT = 'contact',
+}
 
 export default function Landing() {
   const [resumeData, setResumeData] = useState<MainPageContent | null>();
@@ -22,34 +31,39 @@ export default function Landing() {
     });
   }, []);
 
-  const [waypoint, setWaypoint] = useState('home');
+  const [waypoint, setWaypoint] = useState(LANDING_WP.HOME);
   return (
     <div>
+      {!resumeData && (
+        <div className="loader-overlay">
+          <FadeLoader color={'#ffffff'} loading={!resumeData} />
+        </div>
+      )}
       {resumeData && (
         <>
           <Header
-            setWaypoint={() => setWaypoint('home')}
+            setWaypoint={() => setWaypoint(LANDING_WP.HOME)}
             waypoint={waypoint}
             data={resumeData.main}
           />
           <About
-            setWaypoint={() => setWaypoint('about')}
+            setWaypoint={() => setWaypoint(LANDING_WP.ABOUT)}
             data={resumeData.main}
           />
           <Resume
-            setWaypoint={() => setWaypoint('resume')}
+            setWaypoint={() => setWaypoint(LANDING_WP.RESUME)}
             data={resumeData.resume}
           />
           <Portfolio
-            setWaypoint={() => setWaypoint('portfolio')}
+            setWaypoint={() => setWaypoint(LANDING_WP.PORTFOLIO)}
             data={resumeData.portfolio}
           />
           <Testimonials
-            setWaypoint={() => setWaypoint('testimonials')}
+            setWaypoint={() => setWaypoint(LANDING_WP.TESTIMONIALS)}
             data={resumeData.testimonials}
           />
           <Contact
-            setWaypoint={() => setWaypoint('contact')}
+            setWaypoint={() => setWaypoint(LANDING_WP.CONTACT)}
             data={resumeData.main}
           />
           <Footer data={resumeData.main} />
