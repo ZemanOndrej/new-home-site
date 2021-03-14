@@ -4,6 +4,8 @@ import { useAuth } from 'components/hooks/useAuth';
 import { Link } from 'react-router-dom';
 import * as ROUTES from 'constants/routes';
 import { Main } from 'types/mainPage';
+import useSettings from '../hooks/useSettings';
+
 interface Props {
   data: Main;
   setWaypoint: () => void;
@@ -22,6 +24,8 @@ const Header = ({
   waypoint,
 }: Props) => {
   const { logout, isLoggedIn } = useAuth();
+  const { changeIsEditing, isEditing } = useSettings();
+
   return (
     <div className="header-wrapper">
       <div className="bg"></div>
@@ -83,6 +87,15 @@ const Header = ({
                 <li>
                   <span className="clickable" onClick={() => logout()}>
                     Logout
+                  </span>
+                </li>
+                <li>
+                  <span className="clickable" onClick={() => changeIsEditing()}>
+                    <i
+                      style={{ fontSize: 18 }}
+                      className={`fa ${isEditing ? 'fa-save' : 'fa-edit'}`}
+                    ></i>
+                    {!isEditing ? 'Edit' : 'Save'}
                   </span>
                 </li>
               </>

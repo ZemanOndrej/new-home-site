@@ -5,12 +5,14 @@ import App from './App';
 import { FirebaseContext } from 'components/context/firebase';
 import initFirebase from './service/firebase/firebase';
 import 'font-awesome/css/font-awesome.min.css';
-
+import { SettingsProvider, defaultSettings } from 'components/context/settings';
 ReactDOM.render(
   <FirebaseContext.Provider value={initFirebase()}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <SettingsProvider settings={{ ...defaultSettings }}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </SettingsProvider>
   </FirebaseContext.Provider>,
   document.getElementById('root'),
 );
