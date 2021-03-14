@@ -3,26 +3,25 @@ import { Waypoint } from 'react-waypoint';
 import { useAuth } from 'components/hooks/useAuth';
 import { Link } from 'react-router-dom';
 import * as ROUTES from 'constants/routes';
+import { Main } from 'types/mainPage';
+interface Props {
+  data: Main;
+  setWaypoint: () => void;
+  waypoint: string;
+}
 
-/* eslint-disable react/prop-types */
-
-const Header = (props) => {
+const Header = ({
+  data: {
+    name,
+    occupation,
+    description,
+    social,
+    address: { city },
+  },
+  setWaypoint,
+  waypoint,
+}: Props) => {
   const { logout, isLoggedIn } = useAuth();
-
-  if (props.data) {
-    var name = props.data.name;
-    var occupation = props.data.occupation;
-    var description = props.data.description;
-    var city = props.data.address.city;
-    var networks = props.data.social.map((network) => (
-      <li key={network.name}>
-        <a href={network.url}>
-          <i className={network.className}></i>
-        </a>
-      </li>
-    ));
-  }
-
   return (
     <div className="header-wrapper">
       <div className="bg"></div>
@@ -30,9 +29,7 @@ const Header = (props) => {
         <nav
           id="nav-wrap"
           className={
-            props.waypoint === 'home' || props.waypoint === 'about'
-              ? ''
-              : 'opaque'
+            waypoint === 'home' || waypoint === 'about' ? '' : 'opaque'
           }
         >
           <a className="mobile-btn" href="#nav-wrap" title="Show navigation">
@@ -43,32 +40,32 @@ const Header = (props) => {
           </a>
 
           <ul id="nav" className="nav">
-            <li className={props.waypoint === 'home' ? 'current' : ''}>
+            <li className={waypoint === 'home' ? 'current' : ''}>
               <a className="smoothscroll" href="#home">
                 Home
               </a>
             </li>
-            <li className={props.waypoint === 'about' ? 'current' : ''}>
+            <li className={waypoint === 'about' ? 'current' : ''}>
               <a className="smoothscroll" href="#about">
                 About
               </a>
             </li>
-            <li className={props.waypoint === 'resume' ? 'current' : ''}>
+            <li className={waypoint === 'resume' ? 'current' : ''}>
               <a className="smoothscroll" href="#resume">
                 Resume
               </a>
             </li>
-            <li className={props.waypoint === 'portfolio' ? 'current' : ''}>
+            <li className={waypoint === 'portfolio' ? 'current' : ''}>
               <a className="smoothscroll" href="#portfolio">
                 Works
               </a>
             </li>
-            <li className={props.waypoint === 'testimonials' ? 'current' : ''}>
+            <li className={waypoint === 'testimonials' ? 'current' : ''}>
               <a className="smoothscroll" href="#testimonials">
                 Testimonials
               </a>
             </li>
-            <li className={props.waypoint === 'contact' ? 'current' : ''}>
+            <li className={waypoint === 'contact' ? 'current' : ''}>
               <a className="smoothscroll" href="#contact">
                 Contact
               </a>
@@ -93,7 +90,7 @@ const Header = (props) => {
           </ul>
         </nav>
 
-        <Waypoint onEnter={() => props.setWaypoint()}>
+        <Waypoint onEnter={() => setWaypoint()}>
           <div className="row banner">
             <div className="banner-text">
               <h1 className="responsive-headline">I&apos;m {name}.</h1>
@@ -102,7 +99,15 @@ const Header = (props) => {
                 .
               </h3>
               <hr />
-              <ul className="social">{networks}</ul>
+              <ul className="social">
+                {social.map((network) => (
+                  <li key={network.name}>
+                    <a href={network.url}>
+                      <i className={network.className}></i>
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Waypoint>

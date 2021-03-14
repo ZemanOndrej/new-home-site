@@ -39,7 +39,7 @@ export default function SignIn() {
   const onSubmit = handleSubmit(({ email, password }) => {
     login(email, password)?.then((u) => {
       if (u) {
-        history.push('/home');
+        history.push('/#home');
       }
     });
   });
