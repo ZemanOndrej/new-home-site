@@ -1,10 +1,11 @@
+import { LANDING_WP } from 'components/routes/Landing';
 import React from 'react';
 import { Waypoint } from 'react-waypoint';
 import { Main } from 'types/mainPage';
 
 interface Props {
   data: Main;
-  setWaypoint: () => void;
+  setWaypoint: (wp: LANDING_WP) => void;
 }
 
 const about = ({
@@ -29,7 +30,7 @@ const about = ({
         />
       </div>
       <div className="nine columns main-col">
-        <Waypoint onEnter={() => setWaypoint()}>
+        <Waypoint onEnter={() => setWaypoint(LANDING_WP.ABOUT)}>
           <h2>About Me</h2>
         </Waypoint>
 
@@ -64,4 +65,4 @@ const about = ({
   </section>
 );
 
-export default about;
+export default React.memo(about);

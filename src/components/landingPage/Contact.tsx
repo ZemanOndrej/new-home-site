@@ -2,13 +2,14 @@ import React, { useRef, MouseEvent } from 'react';
 import { Waypoint } from 'react-waypoint';
 import { useState } from 'react';
 import { Main } from 'types/mainPage';
+import { LANDING_WP } from 'components/routes/Landing';
 
 interface Props {
   data: Main;
-  setWaypoint: () => void;
+  setWaypoint: (wp: LANDING_WP) => void;
 }
 
-function Contact({
+function contact({
   data: {
     name,
     address: { street, zip, state, city },
@@ -39,7 +40,7 @@ function Contact({
   };
 
   return (
-    <Waypoint onEnter={() => setWaypoint()}>
+    <Waypoint onEnter={() => setWaypoint(LANDING_WP.CONTACT)}>
       <section id="contact">
         <div className="row section-head">
           <div className="two columns header-col">
@@ -179,4 +180,4 @@ function Contact({
   );
 }
 
-export default Contact;
+export default contact;

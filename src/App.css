@@ -7,3 +7,23 @@
   justify-content: center;
   height: 100vh;
 }
+.landing-side-panel {
+  margin: 0;
+  padding: 0;
+  width: 20%;
+  z-index: 200;
+  background-color: black;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+.data-input {
+  height: 40px;
+  margin: 30px 10px 30px 10px;
+}
+#resume * {
+  color: black;
+}
+.input-group * {
+  color: black;
+}

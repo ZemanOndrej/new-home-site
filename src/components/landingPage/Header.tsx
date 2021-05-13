@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 import * as ROUTES from 'constants/routes';
 import { Main } from 'types/mainPage';
 import useSettings from '../hooks/useSettings';
+import { LANDING_WP } from 'components/routes/Landing';
 
 interface Props {
   data: Main;
-  setWaypoint: () => void;
+  setWaypoint: (wp: LANDING_WP) => void;
   waypoint: string;
 }
 
@@ -103,7 +104,7 @@ const Header = ({
           </ul>
         </nav>
 
-        <Waypoint onEnter={() => setWaypoint()}>
+        <Waypoint onEnter={() => setWaypoint(LANDING_WP.HOME)}>
           <div className="row banner">
             <div className="banner-text">
               <h1 className="responsive-headline">I&apos;m {name}.</h1>
@@ -134,4 +135,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export default React.memo(Header);

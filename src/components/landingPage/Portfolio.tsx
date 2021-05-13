@@ -1,13 +1,14 @@
 import React from 'react';
 import { Waypoint } from 'react-waypoint';
 import { Portfolio } from '../../types/mainPage';
+import { LANDING_WP } from 'components/routes/Landing';
 
 interface Props {
   data: Portfolio;
-  setWaypoint: () => void;
+  setWaypoint: (wp: LANDING_WP) => void;
 }
 const portfolio = ({ data: { projects }, setWaypoint }: Props) => (
-  <Waypoint onEnter={() => setWaypoint()}>
+  <Waypoint onEnter={() => setWaypoint(LANDING_WP.PORTFOLIO)}>
     <section id="portfolio">
       <div className="row">
         <div className="twelve columns collapsed">
@@ -42,4 +43,4 @@ const portfolio = ({ data: { projects }, setWaypoint }: Props) => (
   </Waypoint>
 );
 
-export default portfolio;
+export default React.memo(portfolio);

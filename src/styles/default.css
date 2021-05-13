@@ -1,74 +1,6 @@
 @import url('fonts.css');
 
-html,
-body,
-div,
-span,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-abbr,
-address,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-samp,
-small,
-strong,
-sub,
-sup,
-var,
-b,
-i,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+* {
   margin: 0;
   padding: 0;
   border: 0;
@@ -171,7 +103,7 @@ table {
 }
 
 html {
-  font-size: 62.5%;
+  /* font-size: 62.5%; */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -184,7 +116,7 @@ body {
   line-height: 30px;
   color: #838c95;
 
-  -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+  -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -238,8 +170,6 @@ h5 {
 h6 {
   font-size: 14px;
   line-height: 30px;
-}
-.subheader {
 }
 
 p {
@@ -450,11 +380,6 @@ li {
   line-height: 18px;
   margin-bottom: 12px;
 }
-ul.large li {
-}
-li p {
-}
-
 /* ---------------------------------------------------------------------
 /*  Stats Tab Markup
 
@@ -593,9 +518,6 @@ dd {
   background-color: #e6e8eb;
   color: #a9adb2;
 }
-.pagination .prev,
-.pagination .next {
-}
 
 /*  5. Images  --------------------------------------------------------- */
 
@@ -615,9 +537,9 @@ img.pull-left {
 .button,
 .button:visited,
 button,
-input[type='submit'],
-input[type='reset'],
-input[type='button'] {
+.inp input[type='submit'],
+.inp input[type='reset'],
+.inp input[type='button'] {
   font: 16px/30px 'open sans', sans-serif;
   font-weight: bold;
   background: #11abb0;
@@ -645,27 +567,27 @@ input[type='button'] {
 
 .button:hover,
 button:hover,
-input[type='submit']:hover,
-input[type='reset']:hover,
-input[type='button']:hover {
+.inp input[type='submit']:hover,
+.inp input[type='reset']:hover,
+.inp input[type='button']:hover {
   background: #3d4145;
   color: #fff;
 }
 
 .button:active,
 button:active,
-input[type='submit']:active,
-input[type='reset']:active,
-input[type='button']:active {
+.inp input[type='submit']:active,
+.inp input[type='reset']:active,
+.inp input[type='button']:active {
   background: #3d4145;
   color: #fff;
 }
 
 .button.full-width,
 button.full-width,
-input[type='submit'].full-width,
-input[type='reset'].full-width,
-input[type='button'].full-width {
+.inp input[type='submit'].full-width,
+.inp input[type='reset'].full-width,
+.inp input[type='button'].full-width {
   width: 100%;
   padding-left: 0 !important;
   padding-right: 0 !important;
@@ -674,24 +596,24 @@ input[type='button'].full-width {
 
 /* Fix for odd Mozilla border & padding issues */
 button::-moz-focus-inner,
-input::-moz-focus-inner {
+.inp input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
 
 /*  7. Forms  --------------------------------------------------------- */
 
-form {
+.inp form {
   margin-bottom: 24px;
 }
-fieldset {
+.inp fieldset {
   margin-bottom: 24px;
 }
 
-input[type='text'],
-input[type='password'],
-input[type='email'],
-textarea,
+.inp input[type='text'],
+.inp input[type='password'],
+.inp input[type='email'],
+.inp textarea,
 select {
   display: block;
   padding: 18px 15px;
@@ -711,15 +633,15 @@ select {
    width: 220px;
    } */
 
-input[type='text']:focus,
-input[type='password']:focus,
-input[type='email']:focus,
-textarea:focus {
+.inp input[type='text']:focus,
+.inp input[type='password']:focus,
+.inp input[type='email']:focus,
+.inp textarea:focus {
   color: #b3b7bc;
   background-color: #3d4145;
 }
 
-textarea {
+.inp textarea {
   min-height: 220px;
 }
 
@@ -738,13 +660,13 @@ legend span {
   font-weight: 400;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
+.inp input[type='checkbox'],
+.inp input[type='radio'] {
   font-size: 15px;
   color: #737373;
 }
 
-input[type='checkbox'] {
+.inp input[type='checkbox'] {
   display: inline;
 }
 

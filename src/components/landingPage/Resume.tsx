@@ -1,17 +1,18 @@
+import { LANDING_WP } from 'components/routes/Landing';
 import React from 'react';
 import { Waypoint } from 'react-waypoint';
 import { Resume } from 'types/mainPage';
 
 interface Props {
   data: Resume;
-  setWaypoint: () => void;
+  setWaypoint: (wp: LANDING_WP) => void;
 }
 
 const resume = ({
   data: { education, skillmessage, work, skills },
   setWaypoint,
 }: Props) => (
-  <Waypoint onEnter={() => setWaypoint()}>
+  <Waypoint onEnter={() => setWaypoint(LANDING_WP.ABOUT)}>
     <section id="resume">
       <div className="row education">
         <div className="three columns header-col">
@@ -22,7 +23,7 @@ const resume = ({
 
         <div className="nine columns main-col">
           <div className="row item">
-            <div className="twelve columns">
+            <div className="twelve columns education-item">
               {education.map((education) => {
                 <div key={education.school}>
                   <h3>{education.school}</h3>
@@ -89,4 +90,4 @@ const resume = ({
   </Waypoint>
 );
 
-export default resume;
+export default React.memo(resume);
