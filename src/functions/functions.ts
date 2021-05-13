@@ -5,11 +5,12 @@ export function flatten(obj: Temp, startingPath = '', baseObj = {}): Temp {
 
   return Object.keys(obj).reduce((acc: Temp, curr) => {
     const path = `${initString}${curr}`;
-    // if (Array.isArray(obj[curr])) {
-    //   const arr = obj[curr].map((o: Temp) => flatten(o, '', {}));
-    //   acc[curr] = arr;
-    // } else
-    if (typeof obj[curr] === 'object') {
+    if (Array.isArray(obj[curr])) {
+      const arr = obj[curr].map((o: Temp, index: number) =>
+        flatten(o, `${path}.${index}`, {}),
+      );
+      acc[path] = arr;
+    } else if (typeof obj[curr] === 'object') {
       flatten(obj[curr], path, baseObj);
     } else {
       acc[path] = obj[curr];

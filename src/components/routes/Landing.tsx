@@ -5,14 +5,14 @@ import Header from 'components/landingPage/Header';
 import Portfolio from 'components/landingPage/Portfolio';
 import Resume from 'components/landingPage/Resume';
 import Testimonials from 'components/landingPage/Testimonials';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/database';
 import { MainPageContent } from 'types/mainPage';
 import 'styles/landing.css';
 import { FadeLoader } from 'react-spinners';
 import useSettings from 'components/hooks/useSettings';
-import Sidebar from 'components/landingPage/Sidebar';
+import SidebarContainer from 'components/Sidebar/SidebarContainer';
 export enum LANDING_WP {
   HOME = 'home',
   ABOUT = 'about',
@@ -25,10 +25,10 @@ export enum LANDING_WP {
 export default function Landing() {
   const [resumeData, setResumeData] = useState<MainPageContent | null>();
   const fb = useContext(FirebaseContext);
-  const db = fb?.database();
   const { changeIsEditing, isEditing } = useSettings();
 
   useEffect(() => {
+    const db = fb?.database();
     db?.ref('main-page-content').on('value', (snapshot) => {
       const data = snapshot.val();
       setResumeData(data);
@@ -36,6 +36,9 @@ export default function Landing() {
   }, []);
 
   const [waypoint, setWaypoint] = useState(LANDING_WP.HOME);
+  const setWaypointCallback = useCallback(setWaypoint, []);
+  console.log('rendering landing');
+
   return (
     <div>
       {!resumeData && (
@@ -45,33 +48,27 @@ export default function Landing() {
       )}
       {resumeData && (
         <>
-          {isEditing || (true && <Sidebar data={resumeData}></Sidebar>)}
+          {isEditing || (true && <SidebarContainer data={resumeData} />)}
           <div>
             <Header
-              setWaypoint={() => setWaypoint(LANDING_WP.HOME)}
+              setWaypoint={setWaypointCallback}
               waypoint={waypoint}
               data={resumeData.main}
             />
-            <About
-              setWaypoint={() => setWaypoint(LANDING_WP.ABOUT)}
-              data={resumeData.main}
-            />
+            <About setWaypoint={setWaypointCallback} data={resumeData.main} />
             <Resume
-              setWaypoint={() => setWaypoint(LANDING_WP.RESUME)}
+              setWaypoint={setWaypointCallback}
               data={resumeData.resume}
             />
             <Portfolio
-              setWaypoint={() => setWaypoint(LANDING_WP.PORTFOLIO)}
+              setWaypoint={setWaypointCallback}
               data={resumeData.portfolio}
             />
-            <Testimonials
-              setWaypoint={() => setWaypoint(LANDING_WP.TESTIMONIALS)}
+            {/* <Testimonials
+              setWaypoint={setWaypointCallback}
               data={resumeData.testimonials}
-            />
-            <Contact
-              setWaypoint={() => setWaypoint(LANDING_WP.CONTACT)}
-              data={resumeData.main}
-            />
+            /> */}
+            <Contact setWaypoint={setWaypointCallback} data={resumeData.main} />
             <Footer data={resumeData.main} />
           </div>
         </>
