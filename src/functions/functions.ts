@@ -1,17 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Temp = { [path: string]: any };
+export type Temp = Record<string, unknown>;
 export function flatten(obj: Temp, startingPath = '', baseObj = {}): Temp {
   const initString = startingPath ? startingPath + '.' : '';
 
   return Object.keys(obj).reduce((acc: Temp, curr) => {
     const path = `${initString}${curr}`;
     if (Array.isArray(obj[curr])) {
-      const arr = obj[curr].map((o: Temp, index: number) =>
-        flatten(o, `${path}.${index}`, {}),
-      );
+      const arr = (obj[curr] as Temp[]).map((o: Temp) => flatten(o, '', {}));
       acc[path] = arr;
     } else if (typeof obj[curr] === 'object') {
-      flatten(obj[curr], path, baseObj);
+      flatten(obj[curr] as Temp, path, baseObj);
     } else {
       acc[path] = obj[curr];
     }
@@ -19,19 +16,23 @@ export function flatten(obj: Temp, startingPath = '', baseObj = {}): Temp {
   }, baseObj);
 }
 
-export function unflatten(obj: Temp): Temp {
+export function unflatten(obj: Temp, startingPath = ''): Temp {
   const keys = Object.keys(obj);
   return keys.reduce((acc: Temp, key) => {
-    const splitted = key.split('.');
-    let acc_tmp = acc;
+    const splitted = key.replace(startingPath, '').split('.').filter(Boolean);
+    const arr =
+      Array.isArray(obj[key]) &&
+      (obj[key] as Temp[]).map((item: Temp) => unflatten(item, key));
+
+    let acc_tmp: Temp = acc;
     splitted.forEach((attKey, i) => {
       if (!acc_tmp[attKey] && i < splitted.length - 1) {
         acc_tmp[attKey] = {};
-        acc_tmp = acc_tmp[attKey];
+        acc_tmp = acc_tmp[attKey] as Temp;
       } else if (!acc_tmp[attKey]) {
-        acc_tmp[attKey] = obj[key];
+        acc_tmp[attKey] = arr || obj[key];
       } else {
-        acc_tmp = acc_tmp[attKey];
+        acc_tmp = acc_tmp[attKey] as Temp;
       }
     });
     return acc;

@@ -1,6 +1,5 @@
 import { Button } from '@material-ui/core';
-import useSettings from 'components/hooks/useSettings';
-import React, { useCallback, useContext, useReducer, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { MainPageContent } from 'types/mainPage';
 import { flatten, unflatten, Temp } from '../../functions/functions';
 import { FirebaseContext } from 'components/context/firebase';
@@ -10,9 +9,7 @@ interface Props {
   data: MainPageContent;
 }
 
-export interface IDictionary<TValue> {
-  [id: string]: TValue;
-}
+export type IDictionary<TValue> = Record<string, TValue>;
 export interface InputObject {
   id: string;
   value: string;
@@ -29,15 +26,32 @@ export type InputGroups = {
 };
 
 const sidebarContainer = ({ data }: Props) => {
-  const { changeIsEditing, isEditing } = useSettings();
-
   const fb = useContext(FirebaseContext);
   const db = fb?.database();
-  const dataAttrs = flatten(data);
-  const [state, setState] = useState({});
+  const dataAttrs = flatten(data as Temp);
+  const [formState, setFormState] = useState({
+    inputs: {},
+    arrayInputs: {} as Record<string, string>,
+  });
   const handleChange = React.useCallback(
     (ev: React.ChangeEvent<HTMLInputElement>) => {
-      setState({ ...state, [ev.target.name]: ev.target.value });
+      setFormState((prevState) =>
+        ev.target.name.includes(';')
+          ? {
+              ...prevState,
+              arrayInputs: {
+                ...prevState.arrayInputs,
+                [ev.target.name]: ev.target.value,
+              },
+            }
+          : {
+              ...prevState,
+              inputs: {
+                ...prevState.inputs,
+                [ev.target.name]: ev.target.value,
+              },
+            },
+      );
     },
     [],
   );
@@ -47,11 +61,11 @@ const sidebarContainer = ({ data }: Props) => {
       Object.keys(obj).reduce(
         (acc, curr) => {
           if (Array.isArray(obj[curr])) {
-            acc.groupedInputs[curr] = obj[curr].map(mapKeys);
+            acc.groupedInputs[curr] = (obj[curr] as Temp[]).map(mapKeys);
           } else {
             acc.textInputs.push({
               id: curr,
-              value: obj[curr],
+              value: obj[curr] as string,
               handleChange,
             });
           }
@@ -66,52 +80,40 @@ const sidebarContainer = ({ data }: Props) => {
   );
   const [allObjects, setAllObjects] = useState(mapKeys(dataAttrs));
 
-  console.log('renderiing container');
-
   const updateData = useCallback(() => {
     console.log('update');
-    // const formData = textInputs.reduce((acc: Temp, [key, ref]) => {
-    //   acc[key] = ref.current?.value;
-    //   return acc;
-    // }, {});
-    // const res = { ...data, ...unflatten(formData) };
-    // db?.ref('main-page-content')
-    //   .set(res, (e) => {
-    //     console.log(e);
-    //   })
-    //   .then((e) => {
-    //     console.log(e);
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
-  }, []);
+    const res: Temp = { ...dataAttrs, ...formState.inputs };
+
+    for (const key in formState.arrayInputs) {
+      const inputValue = formState.arrayInputs[key];
+      const [arrayId, index, fieldId] = key.split(';'); //TODO nested arrays
+      const item = (res[arrayId] as Temp[])[Number(index)];
+      item[fieldId] = inputValue;
+    }
+    db?.ref('main-page-content')
+      .set(unflatten(res), (e) => {
+        console.log(e);
+      })
+      .then((e) => {
+        console.log(e);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [formState]);
 
   const addItem = useCallback((item: NewItem) => {
-    const newIndex = dataAttrs[item.formName].reduce(
-      (acc: number, curr: InputObject) => {
-        const key = Object.keys(curr)[0];
-        const index = Number(
-          key.replace(item.formName + '.', '').split('.')[0],
-        );
-        return index > acc ? index : acc;
-      },
-      0,
-    );
     const newItem = item.inputs.reduce(
       (acc: IDictionary<string>, curr: InputObject) => {
-        const propName = curr.id.replace(item.formName + '.', '').split('.')[1];
-        acc[`${item.formName}.${newIndex + 1}.${propName}`] = curr.value;
+        acc[curr.id] = curr.value;
 
         return acc;
       },
       {} as IDictionary<string>,
     );
 
-    dataAttrs[item.formName].push(newItem);
+    (dataAttrs[item.formName] as Temp[]).push(newItem);
     setAllObjects(mapKeys(dataAttrs));
-
-    console.log('object');
   }, []);
 
   return (

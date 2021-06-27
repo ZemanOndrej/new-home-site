@@ -72,7 +72,7 @@ export interface Testimonials {
   testimonials: Testimonial[];
 }
 
-export interface MainPageContent {
+export interface MainPageContent extends Record<string, unknown> {
   main: Main;
   resume: Resume;
   portfolio: Portfolio;

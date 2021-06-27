@@ -27,7 +27,7 @@ const form = ({
       </Button>
     ) : (
       <Button color="secondary" fullWidth onClick={handleOpen}>
-        Open
+        Add
       </Button>
     )}
 

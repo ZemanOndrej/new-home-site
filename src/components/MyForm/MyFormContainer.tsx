@@ -10,7 +10,7 @@ import MyForm from './MyForm';
 interface Props {
   data: InputObject[];
   formName: string;
-  addItem: (item: NewItem) => any;
+  addItem: (item: NewItem) => void;
 }
 
 const formContainer = ({ data, formName, addItem }: Props) => {
@@ -62,7 +62,7 @@ const formContainer = ({ data, formName, addItem }: Props) => {
       handleSave={handleSave}
       handleCancel={onCancel}
       handleOpen={handleOpen}
-      isOpen={!!formsState[formName]}
+      isOpen={Boolean(formsState[formName])}
     />
   );
 };

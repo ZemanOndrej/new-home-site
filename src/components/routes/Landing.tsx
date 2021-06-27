@@ -25,7 +25,7 @@ export enum LANDING_WP {
 export default function Landing() {
   const [resumeData, setResumeData] = useState<MainPageContent | null>();
   const fb = useContext(FirebaseContext);
-  const { changeIsEditing, isEditing } = useSettings();
+  const { isEditing } = useSettings();
 
   useEffect(() => {
     const db = fb?.database();
@@ -37,7 +37,6 @@ export default function Landing() {
 
   const [waypoint, setWaypoint] = useState(LANDING_WP.HOME);
   const setWaypointCallback = useCallback(setWaypoint, []);
-  console.log('rendering landing');
 
   return (
     <div>
@@ -48,7 +47,7 @@ export default function Landing() {
       )}
       {resumeData && (
         <>
-          {isEditing || (true && <SidebarContainer data={resumeData} />)}
+          {isEditing && <SidebarContainer data={resumeData} />}
           <div>
             <Header
               setWaypoint={setWaypointCallback}
@@ -64,10 +63,10 @@ export default function Landing() {
               setWaypoint={setWaypointCallback}
               data={resumeData.portfolio}
             />
-            {/* <Testimonials
+            <Testimonials
               setWaypoint={setWaypointCallback}
               data={resumeData.testimonials}
-            /> */}
+            />
             <Contact setWaypoint={setWaypointCallback} data={resumeData.main} />
             <Footer data={resumeData.main} />
           </div>
