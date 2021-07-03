@@ -115,6 +115,13 @@ const sidebarContainer = ({ data }: Props) => {
     (dataAttrs[item.formName] as Temp[]).push(newItem);
     setAllObjects(mapKeys(dataAttrs));
   }, []);
+  const removeItem = useCallback((formName: string, index: number) => {
+    const newItems = (dataAttrs[formName] as Temp[]).filter(
+      (_, i) => i !== index,
+    );
+    dataAttrs[formName] = newItems;
+    setAllObjects(mapKeys(dataAttrs));
+  }, []);
 
   return (
     <aside className="landing-side-panel">
@@ -122,7 +129,12 @@ const sidebarContainer = ({ data }: Props) => {
         <span>Edit Data</span>
       </h1>
       <div style={{ background: '#fff' }}>
-        <Sidebar data={allObjects} update={updateData} addItem={addItem} />
+        <Sidebar
+          data={allObjects}
+          update={updateData}
+          addItem={addItem}
+          handleDeleteItem={removeItem}
+        />
       </div>
       <Button
         color="secondary"

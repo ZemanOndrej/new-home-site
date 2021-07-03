@@ -1,3 +1,5 @@
+import { InputObject } from 'components/Sidebar/SidebarContainer';
+
 export type Temp = Record<string, unknown>;
 export function flatten(obj: Temp, startingPath = '', baseObj = {}): Temp {
   const initString = startingPath ? startingPath + '.' : '';
@@ -37,4 +39,21 @@ export function unflatten(obj: Temp, startingPath = ''): Temp {
     });
     return acc;
   }, {});
+}
+
+export function hashCode(str: string): number {
+  let hash = 0,
+    i = 0;
+  const len = str.length;
+  while (i < len) {
+    hash = ((hash << 5) - hash + str.charCodeAt(i++)) << 0;
+  }
+  return hash;
+}
+export function inputGroupValuesToString(
+  textInputs: InputObject[],
+  index: number,
+): string {
+  const vals = Object.values(textInputs[index] ?? {});
+  return vals.filter((v) => !['object', 'function'].includes(typeof v)).join();
 }
