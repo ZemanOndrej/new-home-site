@@ -20,14 +20,14 @@ const testimonials = ({ data: { testimonials }, setWaypoint }: Props) => (
 
         <div className="ten columns flex-container">
           <ul className="slides">
-            {testimonials.map(({ user, text }) => {
+            {testimonials.map(({ user, text }) => (
               <li key={user}>
                 <blockquote>
                   <p>{text}</p>
                   <cite>{user}</cite>
                 </blockquote>
-              </li>;
-            })}
+              </li>
+            ))}
           </ul>
         </div>
       </div>

@@ -18,7 +18,7 @@ const portfolio = ({ data: { projects }, setWaypoint }: Props) => (
             id="portfolio-wrapper"
             className="bgrid-quarters s-bgrid-thirds cf"
           >
-            {projects.map(({ title, url, image, category }) => {
+            {projects.map(({ title, url, image, category }) => (
               <div key={title} className="columns portfolio-item">
                 <div className="item-wrap">
                   <a href={url} title={title}>
@@ -34,8 +34,8 @@ const portfolio = ({ data: { projects }, setWaypoint }: Props) => (
                     </div>
                   </a>
                 </div>
-              </div>;
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>

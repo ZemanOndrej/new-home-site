@@ -65,11 +65,6 @@ const Header = ({
                 Works
               </a>
             </li>
-            <li className={waypoint === 'testimonials' ? 'current' : ''}>
-              <a className="smoothscroll" href="#testimonials">
-                Testimonials
-              </a>
-            </li>
             <li className={waypoint === 'contact' ? 'current' : ''}>
               <a className="smoothscroll" href="#contact">
                 Contact

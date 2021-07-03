@@ -24,7 +24,7 @@ const resume = ({
         <div className="nine columns main-col">
           <div className="row item">
             <div className="twelve columns education-item">
-              {education.map((education) => {
+              {education.map((education) => (
                 <div key={education.school}>
                   <h3>{education.school}</h3>
                   <p className="info">
@@ -32,8 +32,8 @@ const resume = ({
                     <em className="date">{education.graduated}</em>
                   </p>
                   <p>{education.description}</p>
-                </div>;
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@ const resume = ({
         </div>
 
         <div className="nine columns main-col">
-          {work.map((work) => {
+          {work.map((work) => (
             <div key={work.company}>
               <h3>{work.company}</h3>
               <p className="info">
@@ -55,8 +55,8 @@ const resume = ({
                 <span>&bull;</span> <em className="date">{work.years}</em>
               </p>
               <p>{work.description}</p>
-            </div>;
-          })}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -74,13 +74,15 @@ const resume = ({
             <ul className="skills">
               {skills.map((skills) => {
                 const className = 'bar-expand ' + skills.name.toLowerCase();
-                <li key={skills.name}>
-                  <span
-                    style={{ width: skills.level }}
-                    className={className}
-                  ></span>
-                  <em>{skills.name}</em>
-                </li>;
+                return (
+                  <li key={skills.name}>
+                    <span
+                      style={{ width: skills.level }}
+                      className={className}
+                    ></span>
+                    <em>{skills.name}</em>
+                  </li>
+                );
               })}
             </ul>
           </div>

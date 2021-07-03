@@ -4,7 +4,6 @@ import Footer from 'components/landingPage/Footer';
 import Header from 'components/landingPage/Header';
 import Portfolio from 'components/landingPage/Portfolio';
 import Resume from 'components/landingPage/Resume';
-import Testimonials from 'components/landingPage/Testimonials';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/database';
@@ -63,10 +62,10 @@ export default function Landing() {
               setWaypoint={setWaypointCallback}
               data={resumeData.portfolio}
             />
-            <Testimonials
+            {/* <Testimonials
               setWaypoint={setWaypointCallback}
               data={resumeData.testimonials}
-            />
+            /> */}
             <Contact setWaypoint={setWaypointCallback} data={resumeData.main} />
             <Footer data={resumeData.main} />
           </div>
