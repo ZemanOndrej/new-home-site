@@ -1,7 +1,6 @@
 import React from 'react';
 import 'App.css';
 import Home from 'components/routes/Home';
-import Navigation from 'components/Navigation';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { LANDING, HOME, SIGN_IN, ABOUT } from 'constants/routes';
 import SignIn from './components/routes/SignIn';
