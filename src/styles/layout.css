@@ -33,7 +33,7 @@ body {
 .header-wrapper .bg {
   background-size: cover !important;
   -webkit-background-size: cover !important;
-  background: #161415 url(http://static.ozeman.eu/images/header-background.jpg)
+  background: #161415 url(https://static.ozeman.eu/images/header-background.jpg)
     no-repeat top center;
 
   animation: sharpen 0.5s ease-out;
@@ -534,7 +534,7 @@ ul#nav li.current a {
   -o-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
 
-  background: url(http://static.ozeman.eu/images/overlay-bg.png) repeat;
+  background: url(https://static.ozeman.eu/images/overlay-bg.png) repeat;
 }
 .portfolio-item .item-wrap .link-icon {
   display: block;
@@ -732,7 +732,7 @@ call-to-action .button {
 /* ------------------------------------------------------------------ */
 
 #testimonials {
-  background: #1f1f1f url(http://static.ozeman.eu/images/testimonials-bg.jpg)
+  background: #1f1f1f url(https://static.ozeman.eu/images/testimonials-bg.jpg)
     no-repeat center center;
   background-size: cover !important;
   -webkit-background-size: cover !important;

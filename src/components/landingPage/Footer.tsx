@@ -23,7 +23,7 @@ const footer = ({ data: { social } }: Props) => (
           <li>&copy; 2020</li>
           <li>
             Design by{' '}
-            <a title="Styleshout" href="http://www.styleshout.com/">
+            <a title="Styleshout" href="https://www.styleshout.com/">
               Styleshout
             </a>
           </li>
