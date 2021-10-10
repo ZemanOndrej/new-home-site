@@ -1,3 +1,5 @@
+import { config } from './config';
+
 export interface EmailData {
   subject: string;
   message: string;
@@ -6,16 +8,10 @@ export interface EmailData {
   appInfo: string;
 }
 
-const devConfig = {
-  address: process.env.REACT_APP_DEV_MAIL_SERVICE_ADDRESS,
-};
-const prodConfig = {
-  address: process.env.REACT_APP_PROD_MAIL_SERVICE_ADDRESS,
-};
-const config = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
+const address = config.emailServerAddress || '';
 
 export const sendEmail = async (data: EmailData): Promise<Response> => {
-  return fetch(config.address || '', {
+  return fetch(address, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
