@@ -9,9 +9,10 @@ import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/database';
 import { MainPageContent } from 'types/mainPage';
 import 'styles/landing.css';
-import { FadeLoader } from 'react-spinners';
 import useSettings from 'components/hooks/useSettings';
 import SidebarContainer from 'components/Sidebar/SidebarContainer';
+import ModalContext from 'components/context/modal';
+import Loader from 'components/common/Loader';
 export enum LANDING_WP {
   HOME = 'home',
   ABOUT = 'about',
@@ -26,11 +27,14 @@ export default function Landing() {
   const fb = useContext(FirebaseContext);
   const { isEditing } = useSettings();
 
+  const { openModal, setShow, modal } = useContext(ModalContext);
   useEffect(() => {
+    openModal(() => <Loader />);
     const db = fb?.database();
     db?.ref('main-page-content').on('value', (snapshot) => {
       const data = snapshot.val();
       setResumeData(data);
+      setShow(false);
     });
   }, []);
 
@@ -39,11 +43,7 @@ export default function Landing() {
 
   return (
     <div>
-      {!resumeData && (
-        <div className="loader-overlay">
-          <FadeLoader color={'#ffffff'} loading={!resumeData} />
-        </div>
-      )}
+      {modal()}
       {resumeData && (
         <>
           {isEditing && <SidebarContainer data={resumeData} />}

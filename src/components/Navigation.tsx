@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ROUTES from 'constants/routes';
 import { Link } from 'react-router-dom';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { useAuth } from 'components/hooks/useAuth';
 
 export default function Navigation() {

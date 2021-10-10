@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import React, { useCallback, useContext, useState } from 'react';
 import { MainPageContent } from 'types/mainPage';
 import { flatten, unflatten, Temp } from '../../functions/functions';

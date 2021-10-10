@@ -7,9 +7,11 @@ const initUserState = { user: null };
 export const useAuth = () => {
   const fb = useContext(FirebaseContext);
   const auth = fb?.auth();
-  const [userState, setUserState] = useState<{ user: User | null }>(
-    initUserState,
-  );
+  type UserState = {
+    user: User | null;
+  };
+
+  const [userState, setUserState] = useState<UserState>(initUserState);
   const login = (email: string, password: string) =>
     auth?.signInWithEmailAndPassword(email, password).then((res) => {
       setUserState({ user: res.user });

@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { InputObject } from 'components/Sidebar/SidebarContainer';
 import React from 'react';
 import MyTextInput from './MyTextInput';

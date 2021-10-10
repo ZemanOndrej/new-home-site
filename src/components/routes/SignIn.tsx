@@ -2,29 +2,32 @@ import {
   Button,
   Container,
   Grid,
-  makeStyles,
   Paper,
   TextField,
   Typography,
-} from '@material-ui/core';
+  Theme,
+} from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from 'components/hooks/useAuth';
-const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: theme.spacing(3),
-  },
-  paper: {
-    paddingLeft: theme.spacing(10),
-    paddingRight: theme.spacing(10),
-    paddingTop: theme.spacing(5),
-    paddingBottom: theme.spacing(5),
-  },
-  formName: {
-    marginBottom: theme.spacing(3),
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      padding: theme.spacing(3),
+    },
+    paper: {
+      paddingLeft: theme.spacing(10),
+      paddingRight: theme.spacing(10),
+      paddingTop: theme.spacing(5),
+      paddingBottom: theme.spacing(5),
+    },
+    formName: {
+      marginBottom: theme.spacing(3),
+    },
+  }),
+);
 
 interface FormData {
   email: string;

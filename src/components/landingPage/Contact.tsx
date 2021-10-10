@@ -1,8 +1,13 @@
-import React, { useRef, MouseEvent } from 'react';
+import React, { useRef, MouseEvent, useContext } from 'react';
 import { Waypoint } from 'react-waypoint';
 import { useState } from 'react';
 import { Main } from 'types/mainPage';
 import { LANDING_WP } from 'components/routes/Landing';
+import { sendEmail } from 'service/firebase/email';
+import ModalContext from 'components/context/modal';
+import Loader from 'components/common/Loader';
+import { APP_NAME } from 'consts';
+import { ErrorModal, SuccessModal } from 'components/common/Modals';
 
 interface Props {
   data: Main;
@@ -14,7 +19,6 @@ function contact({
     name,
     address: { street, zip, state, city },
     phone,
-    email,
     contactmessage: message,
   },
   setWaypoint,
@@ -23,6 +27,7 @@ function contact({
   const contactRef = useRef<HTMLInputElement>(null);
   const subRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
+  const { openModal, hideModal } = useContext(ModalContext);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -30,13 +35,44 @@ function contact({
     e.preventDefault();
 
     if (!isSubmitted) {
-      const emailValue = emailRef.current?.value;
-      const subject = subRef.current?.value;
-      const text = textRef.current?.value;
-      const contactName = contactRef.current?.value;
-      console.log({ emailValue, subject, text, contactName, email });
+      const emailData = {
+        email: emailRef.current?.value ?? 'd',
+        message: textRef.current?.value ?? 'd',
+        subject: subRef.current?.value ?? 'd',
+        name: contactRef.current?.value ?? 'd',
+        appInfo: APP_NAME,
+      };
+      console.log(emailData);
+      if (
+        emailData.email.length > 0 &&
+        emailData.subject.length > 0 &&
+        emailData.message.length > 0 &&
+        emailData.name.length > 0
+      ) {
+        openModal(() => <Loader />);
+
+        sendEmail(emailData)
+          .then((res) => {
+            console.log(res);
+            openModal(() => (
+              <SuccessModal
+                message="Email was sent successfully."
+                handleClose={hideModal}
+              />
+            ));
+          })
+          .catch((e) => {
+            console.error(e);
+            openModal(() => (
+              <ErrorModal
+                message="Email was not sent."
+                handleClose={hideModal}
+              />
+            ));
+          });
+        setIsSubmitted(true);
+      }
     }
-    setIsSubmitted(true);
   };
 
   return (
@@ -118,9 +154,6 @@ function contact({
                   <button className="submit" onClick={onSubmit}>
                     Submit
                   </button>
-                  <span id="image-loader">
-                    <img alt="" src="images/loader.gif" />
-                  </span>
                 </div>
               </fieldset>
             </form>
