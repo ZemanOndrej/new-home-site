@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -11,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from 'components/hooks/useAuth';
 import { Paper } from '@mui/material';
+import { User } from '@firebase/auth';
 
 interface FormData {
   email: string;
@@ -22,7 +22,7 @@ function SignIn() {
   const { login } = useAuth();
   const history = useHistory();
   const onSubmit = handleSubmit(({ email, password }) => {
-    login(email, password)?.then((u: any) => {
+    login(email, password)?.then((u: User) => {
       if (u) {
         history.push('/#home');
       }
