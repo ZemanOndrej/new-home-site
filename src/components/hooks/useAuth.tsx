@@ -1,19 +1,20 @@
-import { User } from 'firebase';
+import { User } from 'firebase/auth';
 import { useState, useContext, useEffect } from 'react';
 import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const initUserState = { user: null };
 export const useAuth = () => {
   const fb = useContext(FirebaseContext);
-  const auth = fb?.auth();
+  const auth = getAuth(fb);
   type UserState = {
     user: User | null;
   };
 
   const [userState, setUserState] = useState<UserState>(initUserState);
   const login = (email: string, password: string) =>
-    auth?.signInWithEmailAndPassword(email, password).then((res) => {
+    signInWithEmailAndPassword(auth, email, password).then((res) => {
       setUserState({ user: res.user });
       return res.user;
     });

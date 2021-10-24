@@ -7,34 +7,34 @@ import initFirebase from './service/firebase/firebase';
 import 'font-awesome/css/font-awesome.min.css';
 import { SettingsProvider, defaultSettings } from 'components/context/settings';
 import { ModalProvider } from 'components/context/modal';
-import { ThemeProvider } from '@mui/styles';
-import { createTheme } from '@mui/material';
-import { Shadows } from '@mui/material/styles/shadows';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { grey, common } from '@mui/material/colors';
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#242526',
+      main: grey[500],
     },
     secondary: {
       main: '#d975d0',
     },
     text: {
-      primary: '#E4E6EB',
-      secondary: '#B0B3B8',
+      primary: common.black,
+      secondary: grey[400],
     },
     background: {
-      default: '#242526',
-      paper: '#242526',
+      default: common.black,
+      paper: grey[100],
     },
   },
-  shadows: Array(25).fill('none') as Shadows,
 });
 ReactDOM.render(
-  <ThemeProvider theme={{ theme }}>
+  <ThemeProvider theme={theme}>
     <FirebaseContext.Provider value={initFirebase()}>
       <ModalProvider>
         <SettingsProvider settings={{ ...defaultSettings }}>
           <React.StrictMode>
+            <CssBaseline />
             <App />
           </React.StrictMode>
         </SettingsProvider>

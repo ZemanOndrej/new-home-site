@@ -1,9 +1,9 @@
-import app from 'firebase/app';
-import 'firebase/firestore';
+import { FirebaseApp } from 'firebase/app';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { Post } from 'types/posts';
 
-export const getPosts = async (firebase: app.app.App): Promise<Post[]> => {
-  const res = await firebase.firestore().collection('posts').get();
+export const getPosts = async (firebase: FirebaseApp): Promise<Post[]> => {
+  const res = await getDocs(collection(getFirestore(firebase), 'posts'));
   return Promise.resolve(
     res.docs.map((d) => {
       const { body, title } = d.data();

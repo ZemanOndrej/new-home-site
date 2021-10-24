@@ -5,6 +5,8 @@ import { flatten, unflatten, Temp } from '../../functions/functions';
 import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/database';
 import Sidebar from './Sidebar';
+import { getDatabase, ref, set } from 'firebase/database';
+
 interface Props {
   data: MainPageContent;
 }
@@ -27,7 +29,7 @@ export type InputGroups = {
 
 const sidebarContainer = ({ data }: Props) => {
   const fb = useContext(FirebaseContext);
-  const db = fb?.database();
+  const content = ref(getDatabase(fb), 'main-page-content');
   const dataAttrs = flatten(data as Temp);
   const [formState, setFormState] = useState({
     inputs: {},
@@ -90,10 +92,8 @@ const sidebarContainer = ({ data }: Props) => {
       const item = (res[arrayId] as Temp[])[Number(index)];
       item[fieldId] = inputValue;
     }
-    db?.ref('main-page-content')
-      .set(unflatten(res), (e) => {
-        console.log(e);
-      })
+
+    set(content, unflatten(res))
       .then((e) => {
         console.log(e);
       })

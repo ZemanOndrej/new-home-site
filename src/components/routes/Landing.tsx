@@ -13,6 +13,7 @@ import useSettings from 'components/hooks/useSettings';
 import SidebarContainer from 'components/Sidebar/SidebarContainer';
 import ModalContext from 'components/context/modal';
 import Loader from 'components/common/Loader';
+import { getDatabase, ref, onValue } from 'firebase/database';
 export enum LANDING_WP {
   HOME = 'home',
   ABOUT = 'about',
@@ -30,8 +31,9 @@ export default function Landing() {
   const { openModal, setShow, modal } = useContext(ModalContext);
   useEffect(() => {
     openModal(() => <Loader />);
-    const db = fb?.database();
-    db?.ref('main-page-content').on('value', (snapshot) => {
+    const db = getDatabase(fb);
+    const mainPageContent = ref(db, 'main-page-content');
+    onValue(mainPageContent, (snapshot) => {
       const data = snapshot.val();
       setResumeData(data);
       setShow(false);

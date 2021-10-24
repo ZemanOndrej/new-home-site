@@ -1,46 +1,28 @@
-import {
-  Button,
-  Container,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-  Theme,
-} from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';
-import React from 'react';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from 'components/hooks/useAuth';
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      padding: theme.spacing(3),
-    },
-    paper: {
-      paddingLeft: theme.spacing(10),
-      paddingRight: theme.spacing(10),
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
-    },
-    formName: {
-      marginBottom: theme.spacing(3),
-    },
-  }),
-);
+import { Paper } from '@mui/material';
 
 interface FormData {
   email: string;
   password: string;
 }
 
-export default function SignIn() {
-  const classes = useStyles();
+function SignIn() {
   const { handleSubmit, register } = useForm<FormData>();
   const { login } = useAuth();
   const history = useHistory();
   const onSubmit = handleSubmit(({ email, password }) => {
-    login(email, password)?.then((u) => {
+    login(email, password)?.then((u: any) => {
       if (u) {
         history.push('/#home');
       }
@@ -48,51 +30,55 @@ export default function SignIn() {
   });
 
   return (
-    <Container className={classes.container} maxWidth="xs">
-      <Paper className={classes.paper}>
-        <Typography className={classes.formName} variant="h4">
+    <Container component="main" maxWidth="sm">
+      <Paper
+        sx={{
+          marginTop: 20,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          paddingBottom: 10,
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form onSubmit={onSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    inputRef={register}
-                    fullWidth
-                    label="Email"
-                    name="email"
-                    size="small"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    inputRef={register}
-                    fullWidth
-                    label="Password"
-                    name="password"
-                    size="small"
-                    type="password"
-                    variant="outlined"
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                color="secondary"
-                fullWidth
-                type="submit"
-                variant="contained"
-              >
-                Log in
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
+        <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            type="email"
+            label="Email Address"
+            autoComplete="email"
+            autoFocus
+            {...register('email', { required: true })}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            label="Password"
+            type="password"
+            id="password"
+            {...register('password', { required: true })}
+            autoComplete="current-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+        </Box>
       </Paper>
     </Container>
   );
 }
+export default SignIn;
