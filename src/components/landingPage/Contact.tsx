@@ -3,7 +3,11 @@ import { Waypoint } from 'react-waypoint';
 import { useState } from 'react';
 import { Main } from 'types/mainPage';
 import { LANDING_WP } from 'components/routes/Landing';
-import { sendEmail } from 'service/firebase/email';
+import {
+  getEmailStatus,
+  saveEmailStatus,
+  sendEmail,
+} from 'service/firebase/email';
 import ModalContext from 'components/context/modal';
 import Loader from 'components/common/Loader';
 import { APP_NAME } from 'consts';
@@ -27,19 +31,20 @@ function contact({
   const contactRef = useRef<HTMLInputElement>(null);
   const subRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const { openModal, hideModal } = useContext(ModalContext);
+  const { openModal } = useContext(ModalContext);
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(Boolean(getEmailStatus()));
+  const [error, setError] = useState<string | null>();
 
   const onSubmit = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (!isSubmitted) {
       const emailData = {
-        email: emailRef.current?.value ?? 'd',
-        message: textRef.current?.value ?? 'd',
-        subject: subRef.current?.value ?? 'd',
-        name: contactRef.current?.value ?? 'd',
+        email: emailRef.current?.value || '',
+        message: textRef.current?.value || '',
+        subject: subRef.current?.value || '',
+        name: contactRef.current?.value || '',
         appInfo: APP_NAME,
       };
       console.log(emailData);
@@ -54,23 +59,29 @@ function contact({
         sendEmail(emailData)
           .then((res) => {
             console.log(res);
-            openModal(() => (
+            openModal<void>((closeModal) => (
               <SuccessModal
                 message="Email was sent successfully."
-                handleClose={hideModal}
+                handleClose={closeModal}
               />
-            ));
+            ))?.then(() => {
+              setIsSubmitted(true);
+              saveEmailStatus(new Date());
+            });
           })
           .catch((e) => {
             console.error(e);
-            openModal(() => (
+            openModal<void>((closeModal) => (
               <ErrorModal
                 message="Email was not sent."
-                handleClose={hideModal}
+                handleClose={closeModal}
               />
-            ));
+            ))?.then(() =>
+              setError('An error ocurred please try again later.'),
+            );
           });
-        setIsSubmitted(true);
+      } else {
+        setError('Please fill all required fields');
       }
     }
   };
@@ -94,62 +105,76 @@ function contact({
           <div className="eight columns">
             <form action="" method="post" id="contactForm" name="contactForm">
               <fieldset>
-                <div>
-                  <label htmlFor="contactName">
-                    Name <span className="required">*</span>
-                  </label>
-                  <input
-                    className="inp"
-                    type="text"
-                    defaultValue=""
-                    size={35}
-                    id="contactName"
-                    name="contactName"
-                    ref={contactRef}
-                  />
-                </div>
+                {!isSubmitted && (
+                  <>
+                    <div>
+                      <label htmlFor="contactName">
+                        Name <span className="required">*</span>
+                      </label>
+                      <input
+                        className="inp"
+                        type="text"
+                        defaultValue=""
+                        size={35}
+                        id="contactName"
+                        name="contactName"
+                        ref={contactRef}
+                      />
+                    </div>
 
-                <div>
-                  <label htmlFor="contactEmail">
-                    Email <span className="required">*</span>
-                  </label>
-                  <input
-                    className="inp"
-                    type="text"
-                    defaultValue=""
-                    size={35}
-                    id="contactEmail"
-                    name="contactEmail"
-                    ref={emailRef}
-                  />
-                </div>
+                    <div>
+                      <label htmlFor="contactEmail">
+                        Email <span className="required">*</span>
+                      </label>
+                      <input
+                        className="inp"
+                        type="text"
+                        defaultValue=""
+                        size={35}
+                        id="contactEmail"
+                        name="contactEmail"
+                        ref={emailRef}
+                      />
+                    </div>
 
-                <div>
-                  <label htmlFor="contactSubject">Subject</label>
-                  <input
-                    className="inp"
-                    type="text"
-                    defaultValue=""
-                    size={35}
-                    id="contactSubject"
-                    name="contactSubject"
-                    ref={subRef}
-                  />
-                </div>
+                    <div>
+                      <label htmlFor="contactSubject">
+                        Subject<span className="required">*</span>
+                      </label>
+                      <input
+                        className="inp"
+                        type="text"
+                        defaultValue=""
+                        size={35}
+                        id="contactSubject"
+                        name="contactSubject"
+                        ref={subRef}
+                      />
+                    </div>
 
-                <div>
-                  <label htmlFor="contactMessage">
-                    Message <span className="required">*</span>
-                  </label>
-                  <textarea
-                    cols={50}
-                    rows={15}
-                    id="contactMessage"
-                    name="contactMessage"
-                    ref={textRef}
-                  ></textarea>
-                </div>
+                    <div>
+                      <label htmlFor="contactMessage">
+                        Message <span className="required">*</span>
+                      </label>
+                      <textarea
+                        cols={50}
+                        rows={15}
+                        id="contactMessage"
+                        name="contactMessage"
+                        ref={textRef}
+                      ></textarea>
+                    </div>
+                  </>
+                )}
 
+                {error && <div id="message-warning"> {error}</div>}
+                {isSubmitted && (
+                  <div id="message-success">
+                    <i className="fa fa-check"></i>Your message was sent, thank
+                    you!
+                    <br />
+                  </div>
+                )}
                 <div>
                   <button className="submit" onClick={onSubmit}>
                     Submit
@@ -157,12 +182,6 @@ function contact({
                 </div>
               </fieldset>
             </form>
-
-            <div id="message-warning"> Error boy</div>
-            <div id="message-success">
-              <i className="fa fa-check"></i>Your message was sent, thank you!
-              <br />
-            </div>
           </div>
 
           <aside className="four columns footer-widgets">

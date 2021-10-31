@@ -6,7 +6,9 @@ interface Modal {
   toggle: () => void;
   setShow: (value: boolean) => void;
   hideModal: () => void;
-  openModal: (render: (closeModal: () => void) => JSX.Element) => void;
+  openModal: <T>(
+    render: (closeModal: (param: T) => void) => JSX.Element,
+  ) => Promise<T> | null;
 }
 
 export const defaultSettings = {
@@ -17,6 +19,16 @@ export const defaultSettings = {
   hideModal: () => null,
   openModal: () => null,
 };
+
+export enum ModalReturnStatus {
+  Cancelled,
+  OK,
+}
+
+export interface ModalResult<T> {
+  status: ModalReturnStatus;
+  data: T;
+}
 
 const ModalContext = React.createContext<Modal>(defaultSettings);
 
@@ -41,11 +53,21 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         setShow,
         toggle: () => setShow(!show),
         hideModal: () => setShow(false),
-        openModal: (modal: (close: () => void) => JSX.Element) => {
-          setShow(true);
-          setModal(
-            <div className="modal-overlay">{modal(() => setShow(false))}</div>,
-          );
+        openModal: <T,>(
+          modal: (close: (param: T) => void) => JSX.Element,
+        ): Promise<T> => {
+          const promise = new Promise<T>((resolve) => {
+            setShow(true);
+            setModal(
+              <div className="modal-overlay">
+                {modal((param: T) => {
+                  setShow(false);
+                  resolve(param);
+                })}
+              </div>,
+            );
+          });
+          return promise;
         },
       }}
     >
