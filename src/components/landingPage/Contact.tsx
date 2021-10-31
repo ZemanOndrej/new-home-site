@@ -175,11 +175,13 @@ function contact({
                     <br />
                   </div>
                 )}
-                <div>
-                  <button className="submit" onClick={onSubmit}>
-                    Submit
-                  </button>
-                </div>
+                {!isSubmitted && (
+                  <div>
+                    <button className="submit" onClick={onSubmit}>
+                      Submit
+                    </button>
+                  </div>
+                )}
               </fieldset>
             </form>
           </div>
