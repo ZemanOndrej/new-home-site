@@ -1,3 +1,4 @@
+import Anchor from 'components/common/Anchor';
 import React from 'react';
 import { Main } from 'types/mainPage';
 
@@ -30,9 +31,9 @@ const footer = ({ data: { social } }: Props) => (
         </ul>
       </div>
       <div id="go-top">
-        <a className="smoothscroll" title="Back to Top" href="#home">
+        <Anchor title="Back to Top" href="#home">
           <i className="fa fa-chevron-up"></i>
-        </a>
+        </Anchor>
       </div>
     </div>
   </footer>

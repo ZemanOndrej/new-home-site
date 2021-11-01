@@ -41,7 +41,10 @@ export default function Landing() {
   }, []);
 
   const [waypoint, setWaypoint] = useState(LANDING_WP.HOME);
-  const setWaypointCallback = useCallback(setWaypoint, []);
+  const setWaypointCallback = useCallback((href: LANDING_WP) => {
+    setWaypoint(href);
+    history.pushState({}, '', '#' + href);
+  }, []);
 
   return (
     <div>

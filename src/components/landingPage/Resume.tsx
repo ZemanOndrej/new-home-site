@@ -12,7 +12,7 @@ const resume = ({
   data: { education, skillmessage, work, skills },
   setWaypoint,
 }: Props) => (
-  <Waypoint onEnter={() => setWaypoint(LANDING_WP.ABOUT)}>
+  <Waypoint onEnter={() => setWaypoint(LANDING_WP.RESUME)}>
     <section id="resume">
       <div className="row education">
         <div className="three columns header-col">

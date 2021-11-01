@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Waypoint } from 'react-waypoint';
 import { useAuth } from 'components/hooks/useAuth';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import * as ROUTES from 'constants/routes';
 import { Main } from 'types/mainPage';
 import useSettings from '../hooks/useSettings';
 import { LANDING_WP } from 'components/routes/Landing';
+import Anchor from 'components/common/Anchor';
 
 interface Props {
   data: Main;
@@ -26,17 +27,13 @@ const Header = ({
 }: Props) => {
   const { logout, isLoggedIn } = useAuth();
   const { changeIsEditing, isEditing } = useSettings();
+  const [navClassName, setNavClassName] = useState('');
 
   return (
     <div className="header-wrapper">
       <div className="bg"></div>
       <header id="home" style={{ height: '100vh' }}>
-        <nav
-          id="nav-wrap"
-          className={
-            waypoint === 'home' || waypoint === 'about' ? '' : 'opaque'
-          }
-        >
+        <nav id="nav-wrap" className={navClassName}>
           <a className="mobile-btn" href="#nav-wrap" title="Show navigation">
             Show navigation
           </a>
@@ -45,30 +42,50 @@ const Header = ({
           </a>
 
           <ul id="nav" className="nav">
-            <li className={waypoint === 'home' ? 'current' : ''}>
-              <a className="smoothscroll" href="#home">
+            <li className={waypoint === LANDING_WP.HOME ? 'current' : ''}>
+              <Anchor
+                href="#home"
+                wp={LANDING_WP.HOME}
+                setWaypoint={setWaypoint}
+              >
                 Home
-              </a>
+              </Anchor>
             </li>
-            <li className={waypoint === 'about' ? 'current' : ''}>
-              <a className="smoothscroll" href="#about">
+            <li className={waypoint === LANDING_WP.ABOUT ? 'current' : ''}>
+              <Anchor
+                href="#about"
+                wp={LANDING_WP.ABOUT}
+                setWaypoint={setWaypoint}
+              >
                 About
-              </a>
+              </Anchor>
             </li>
-            <li className={waypoint === 'resume' ? 'current' : ''}>
-              <a className="smoothscroll" href="#resume">
+            <li className={waypoint === LANDING_WP.RESUME ? 'current' : ''}>
+              <Anchor
+                href="#resume"
+                wp={LANDING_WP.RESUME}
+                setWaypoint={setWaypoint}
+              >
                 Resume
-              </a>
+              </Anchor>
             </li>
-            <li className={waypoint === 'portfolio' ? 'current' : ''}>
-              <a className="smoothscroll" href="#portfolio">
+            <li className={waypoint === LANDING_WP.PORTFOLIO ? 'current' : ''}>
+              <Anchor
+                href="#portfolio"
+                wp={LANDING_WP.PORTFOLIO}
+                setWaypoint={setWaypoint}
+              >
                 Works
-              </a>
+              </Anchor>
             </li>
-            <li className={waypoint === 'contact' ? 'current' : ''}>
-              <a className="smoothscroll" href="#contact">
+            <li className={waypoint === LANDING_WP.CONTACT ? 'current' : ''}>
+              <Anchor
+                href="#contact"
+                wp={LANDING_WP.CONTACT}
+                setWaypoint={setWaypoint}
+              >
                 Contact
-              </a>
+              </Anchor>
             </li>
             {!isLoggedIn && (
               <li>
@@ -98,8 +115,13 @@ const Header = ({
             )}
           </ul>
         </nav>
-
-        <Waypoint onEnter={() => setWaypoint(LANDING_WP.HOME)}>
+        <Waypoint
+          onEnter={() => {
+            setWaypoint(LANDING_WP.HOME);
+            setNavClassName('');
+          }}
+          onLeave={() => setNavClassName('opaque')}
+        >
           <div className="row banner">
             <div className="banner-text">
               <h1 className="responsive-headline">I&apos;m {name}.</h1>
@@ -121,9 +143,9 @@ const Header = ({
           </div>
         </Waypoint>
         <p className="scrolldown">
-          <a className="smoothscroll" href="#about">
+          <Anchor href="#about" wp={LANDING_WP.ABOUT} setWaypoint={setWaypoint}>
             <i className="fa fa-chevron-circle-down"></i>
-          </a>
+          </Anchor>
         </p>
       </header>
     </div>
