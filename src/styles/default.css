@@ -55,7 +55,7 @@ pre {
 
 blockquote,
 q {
-  quotes: &#8220 &#8220;
+  quotes: '“' '“';
 }
 
 blockquote:before,
@@ -620,7 +620,6 @@ select {
   margin: 0 0 24px 0;
   border: 0;
   outline: none;
-  vertical-align: middle;
   min-width: 225px;
   max-width: 100%;
   font-size: 15px;
@@ -645,16 +644,16 @@ select {
   min-height: 220px;
 }
 
-label,
-legend {
+.lbl label,
+.legend legend {
   font: 16px/24px 'open sans', sans-serif;
   font-weight: bold;
   margin: 12px 0;
   color: #3d4145;
   display: block;
 }
-label span,
-legend span {
+.lbl label span,
+.legend legend span {
   color: #8b9798;
   font: 14px/24px 'open sans', sans-serif;
   font-weight: 400;

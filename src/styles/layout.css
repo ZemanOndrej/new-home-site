@@ -199,7 +199,7 @@ ul#nav li {
 
 /* Links */
 ul#nav li a,
-span {
+ul#nav li span {
   /* 8px padding top + 8px padding bottom + 32px line-height = 48px */
 
   display: inline-block;

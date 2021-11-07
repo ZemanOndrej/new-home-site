@@ -28,6 +28,7 @@ function SignIn() {
       }
     });
   });
+  const buttonStyle = { mt: 3, mb: 2, pb: 1, pt: 1, pl: 6, pr: 6 };
 
   return (
     <Container component="main" maxWidth="sm">
@@ -53,6 +54,7 @@ function SignIn() {
             fullWidth
             id="email"
             type="email"
+            variant="filled"
             label="Email Address"
             autoComplete="email"
             autoFocus
@@ -62,20 +64,33 @@ function SignIn() {
             margin="normal"
             required
             fullWidth
+            variant="filled"
             label="Password"
             type="password"
             id="password"
             {...register('password', { required: true })}
             autoComplete="current-password"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+          <Container
+            style={{ display: 'flex', justifyContent: 'space-evenly' }}
           >
-            Sign In
-          </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => history.push('/#home')}
+              sx={buttonStyle}
+            >
+              Go back
+            </Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              sx={buttonStyle}
+            >
+              Sign In
+            </Button>
+          </Container>
         </Box>
       </Paper>
     </Container>
