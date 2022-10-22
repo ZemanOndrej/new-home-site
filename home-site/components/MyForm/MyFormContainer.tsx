@@ -54,15 +54,14 @@ const FormContainer = ({ data, formName, addItem }: Props) => {
     },
     [],
   );
-
   return (
     <MyForm
-      data={formsState[formName]}
+      data={formsState?.[formName] as InputObject[]}
       handleChange={handleChange}
       handleSave={handleSave}
       handleCancel={onCancel}
       handleOpen={handleOpen}
-      isOpen={Boolean(formsState[formName])}
+      isOpen={Boolean(formsState?.[formName])}
     />
   );
 };

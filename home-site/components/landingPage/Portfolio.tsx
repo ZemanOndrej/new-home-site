@@ -22,7 +22,7 @@ const portfolio = ({ data: { projects }, setWaypoint }: Props) => (
               <div key={title} className="columns portfolio-item">
                 <div className="item-wrap">
                   <a href={url} title={title}>
-                    <img alt={title} src={image} />
+                    <img alt={title} src={image} loading="lazy" />
                     <div className="overlay">
                       <div className="portfolio-item-meta">
                         <h5>{title}</h5>

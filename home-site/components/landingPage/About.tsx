@@ -28,6 +28,7 @@ const about = ({
             className="profile-pic"
             src={image}
             alt="Ondrej Zeman Profile Pic"
+            loading="lazy"
           />
         </div>
         <div className="nine columns main-col">

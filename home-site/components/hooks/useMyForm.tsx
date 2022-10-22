@@ -1,7 +1,7 @@
 import { IDictionary, InputObject } from 'components/Sidebar/SidebarContainer';
-import { useReducer, useCallback } from 'react';
+import { useReducer } from 'react';
 
-const initialState = {} as IDictionary<string>;
+const initialState = {} as IDictionary<unknown>;
 
 export enum FormOptions {
   OPEN,
@@ -17,9 +17,10 @@ type ActionType = {
   index?: number;
 };
 export const useMyForm = () => {
-  //TODO fix any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const reducer = useCallback((state: any, action: ActionType) => {
+  const reducer = (
+    state: IDictionary<unknown> | undefined,
+    action: ActionType,
+  ) => {
     switch (action.type) {
       case FormOptions.OPEN: {
         const form = action.value?.map(({ id }) => ({
@@ -34,7 +35,7 @@ export const useMyForm = () => {
         return { ...state, [action.key]: undefined };
       }
     }
-  }, []);
+  };
 
   const [formsState, dispatch] = useReducer(reducer, initialState);
 
