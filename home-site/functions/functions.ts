@@ -24,7 +24,9 @@ export function unflatten(obj: Temp, startingPath = ''): Temp {
     const splitted = key.replace(startingPath, '').split('.').filter(Boolean);
     const arr =
       Array.isArray(obj[key]) &&
-      (obj[key] as Temp[]).map((item: Temp) => unflatten(item, key));
+      (obj[key] as Temp[])
+        .map((item: Temp) => unflatten(item, key))
+        .filter(Boolean);
 
     let acc_tmp: Temp = acc;
     splitted.forEach((attKey, i) => {

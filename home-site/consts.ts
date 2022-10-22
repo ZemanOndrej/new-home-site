@@ -7,3 +7,4 @@ export enum LANDING_WP {
   TESTIMONIALS = 'testimonials',
   CONTACT = 'contact',
 }
+export const MAIN_PAGE_CONTENT = 'main-page-content';

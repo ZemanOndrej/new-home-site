@@ -27,6 +27,9 @@ export const saveEmailStatus = (sentSuccessfully: Date): void => {
 };
 
 export const getEmailStatus = (): Date | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
   const date = localStorage.getItem(emailStatusKey);
   return date ? new Date(date) : null;
 };
