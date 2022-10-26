@@ -1,5 +1,6 @@
 import { LANDING_WP } from 'consts';
 import React from 'react';
+import Image from 'next/image';
 import { Waypoint } from 'react-waypoint';
 import { Main } from 'types/mainPage';
 
@@ -24,11 +25,13 @@ const about = ({
     <Waypoint onEnter={() => setWaypoint(LANDING_WP.ABOUT)}>
       <div className="row">
         <div className="three columns">
-          <img
+          <Image
             className="profile-pic"
             src={image}
             alt="Ondrej Zeman Profile Pic"
             loading="lazy"
+            height={120}
+            width={120}
           />
         </div>
         <div className="nine columns main-col">

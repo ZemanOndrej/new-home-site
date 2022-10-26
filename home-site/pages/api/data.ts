@@ -11,16 +11,21 @@ let lastRefreshTime: number | null = null;
 
 async function fetchData() {
   const response = await fetch(`${config.database}/${MAIN_PAGE_CONTENT}.json`);
+  console.log('fetching data');
   const data = (await response.json()) as MainPageContent;
   return data;
 }
 export const getData = async (refresh = false): Promise<MainPageContent> => {
-  if (lastRefreshTime == null || lastRefreshTime + 604800 < Date.now()) {
+  if (
+    cachedData == null ||
+    lastRefreshTime == null ||
+    lastRefreshTime + 604800 < Date.now()
+  ) {
     lastRefreshTime = Date.now();
     return (cachedData = await fetchData());
   }
   if (!refresh) {
-    return (cachedData ??= await fetchData());
+    return cachedData;
   }
   lastRefreshTime = Date.now();
   return (cachedData = await fetchData());

@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { FirebaseContext } from 'components/context/firebase';
 import { Post } from 'types/posts';
-import { getPosts } from 'service/firebase/post';
+import { getPosts } from 'service/post';
 import type { NextPage } from 'next';
 
 export const Home: NextPage = () => {

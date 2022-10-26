@@ -1,4 +1,5 @@
 import { LANDING_WP } from 'consts';
+import Image from 'next/future/image';
 import React from 'react';
 import { Waypoint } from 'react-waypoint';
 import { Portfolio } from 'types/mainPage';
@@ -14,15 +15,19 @@ const portfolio = ({ data: { projects }, setWaypoint }: Props) => (
         <div className="twelve columns collapsed">
           <h1>Check Out Some of My Works.</h1>
 
-          <div
-            id="portfolio-wrapper"
-            className="bgrid-quarters s-bgrid-thirds cf"
-          >
+          <div className="portfolio-grid">
             {projects.map(({ title, url, image, category }) => (
-              <div key={title} className="columns portfolio-item">
-                <div className="item-wrap">
+              <div key={title} className="portfolio-item">
+                <div className="item-wrap" style={{ height: 200 }}>
                   <a href={url} title={title}>
-                    <img alt={title} src={image} loading="lazy" />
+                    <Image
+                      alt={title}
+                      src={image}
+                      loading="lazy"
+                      width={'200'}
+                      height={0}
+                      style={{ width: '100%', height: '100%', minHeight: 200 }}
+                    />
                     <div className="overlay">
                       <div className="portfolio-item-meta">
                         <h5>{title}</h5>

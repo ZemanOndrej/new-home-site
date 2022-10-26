@@ -6,9 +6,11 @@ import { FirebaseContext } from 'components/context/firebase';
 import 'firebase/database';
 import Sidebar from './Sidebar';
 import { getDatabase, ref, set } from 'firebase/database';
+import { updateDataCache } from 'service/data';
 
 interface Props {
   data: MainPageContent;
+  refreshData: (data: MainPageContent) => void;
 }
 
 export type IDictionary<TValue> = Record<string, TValue>;
@@ -27,7 +29,7 @@ export type InputGroups = {
   groupedInputs: IDictionary<InputGroups[]>;
 };
 
-const SidebarContainer = ({ data }: Props) => {
+const SidebarContainer = ({ data, refreshData }: Props) => {
   const fb = useContext(FirebaseContext);
   const content = ref(getDatabase(fb), 'main-page-content');
   const dataAttrs = flatten(data as Temp);
@@ -96,6 +98,10 @@ const SidebarContainer = ({ data }: Props) => {
     set(content, unflatten(res))
       .then((e) => {
         console.log(e);
+        setTimeout(async () => {
+          const data = await updateDataCache();
+          refreshData(data);
+        }, 1000);
       })
       .catch((e) => {
         console.log(e);

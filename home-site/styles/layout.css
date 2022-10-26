@@ -499,11 +499,19 @@ ul#nav li.current a {
 }
 
 /* Portfolio Content */
-#portfolio-wrapper .columns {
-  margin-bottom: 36px;
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 35px;
+  column-gap: 20px;
+}
+
+.portfolio-item {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .portfolio-item .item-wrap {
-  background: #fff;
+  background: transparent;
   overflow: hidden;
   position: relative;
 

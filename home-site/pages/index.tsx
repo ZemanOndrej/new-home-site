@@ -15,7 +15,8 @@ import SidebarContainer from '../components/Sidebar/SidebarContainer';
 import { getData } from './api/data';
 
 const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
-  ({ resumeData }) => {
+  ({ resumeData: data }) => {
+    const [resumeData, setResumeData] = useState(data);
     const { isEditing } = useSettings();
     const { modal } = useContext(ModalContext);
     const [waypoint, setWaypoint] = useState(LANDING_WP.HOME);
@@ -34,7 +35,14 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
         {modal()}
         {resumeData && (
           <>
-            {isEditing && <SidebarContainer data={resumeData} />}
+            {isEditing && (
+              <SidebarContainer
+                data={resumeData}
+                refreshData={(data) => {
+                  setResumeData(data);
+                }}
+              />
+            )}
             <div>
               <Header
                 setWaypoint={setWaypointCallback}

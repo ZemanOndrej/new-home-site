@@ -4,7 +4,7 @@ import 'styles/landing.css';
 
 import type { AppProps } from 'next/app';
 import { FirebaseContext } from '../components/context/firebase';
-import initFirebase from 'service/firebase/firebase';
+import initFirebase from 'service/firebase';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { CacheProvider } from '@emotion/react';
 import { defaultSettings, SettingsProvider } from 'components/context/settings';

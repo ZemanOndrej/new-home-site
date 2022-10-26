@@ -2,11 +2,7 @@ import React, { useRef, MouseEvent, useContext } from 'react';
 import { Waypoint } from 'react-waypoint';
 import { useState } from 'react';
 import { Main } from 'types/mainPage';
-import {
-  getEmailStatus,
-  saveEmailStatus,
-  sendEmail,
-} from 'service/firebase/email';
+import { getEmailStatus, saveEmailStatus, sendEmail } from 'service/email';
 import ModalContext from 'components/context/modal';
 import Loader from 'components/common/Loader';
 import { ErrorModal, SuccessModal } from 'components/common/Modals';
