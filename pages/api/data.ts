@@ -11,7 +11,7 @@ let lastRefreshTime: number | null = null;
 
 async function fetchData() {
   const response = await fetch(`${config.database}/${MAIN_PAGE_CONTENT}.json`);
-  console.log('fetching data');
+  console.log(new Date().toISOString(),'fetching data');
   const data = (await response.json()) as MainPageContent;
   return data;
 }

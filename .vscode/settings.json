@@ -17,5 +17,8 @@
   "[typescript]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
     "editor.tabSize": 2
-  }
+},
+"yaml.schemas": {
+	"https://json.schemastore.org/github-workflow.json": "file:///f%3A/Ondrej/Coding/js/react/personal-site/.github/workflows/deploy.yml"
+}
 }
