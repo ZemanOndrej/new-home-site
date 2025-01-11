@@ -18,7 +18,7 @@ type ActionType = {
 };
 export const useMyForm = () => {
   //TODO fix any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   const reducer = useCallback((state: any, action: ActionType) => {
     switch (action.type) {
       case FormOptions.OPEN: {
